@@ -7,6 +7,7 @@ use App\Models\EmailList;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\ToModel;
+use DB;
 
 class EmailListController extends Controller
 {
@@ -39,7 +40,7 @@ class EmailListController extends Controller
     public function import(Request $request)
     {
         $request->validate([
-            'csv_file' => 'required|mimes:csv,txt|max:2048',
+            'csv_file' => 'required',
         ]);
     
         try {
@@ -60,6 +61,19 @@ class EmailListController extends Controller
         } catch (\Exception $e) {
             return redirect()->route('email_list.index')->with('error', $e->getMessage());
         }
+    }
+
+
+    public function showDuplicates()
+    {
+        // Query to find duplicate emails
+        $emailLists = DB::table('email_list')
+                        ->select('email', DB::raw('COUNT(*) as count'))
+                        ->groupBy('email')
+                        ->having('count', '>', 1)
+                        ->paginate(50);
+
+        return view('email_list.duplicated', compact('emailLists'));
     }
     
 }

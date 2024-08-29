@@ -31,6 +31,9 @@
                         <a class="nav-link" href="{{route('email_list.index')}}">Email List</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="{{route('email_list.duplicates')}}">Duplicate Email List</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{{route('email_campaign.index')}}">Campaigns</a>
                     </li>
                    

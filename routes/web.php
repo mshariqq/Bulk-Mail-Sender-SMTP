@@ -26,6 +26,8 @@ Route::middleware('auth')->group(function () {
 
     // Import route
     Route::post('/email-lists/import', [EmailListController::class, 'import'])->name('email_list.import');
+    Route::get('/email-list/duplicates', [EmailListController::class, 'showDuplicates'])->name('email_list.duplicates');
+
 
 
     Route::get('/email-campaigns', [EmailCampaignController::class, 'index'])->name('email_campaign.index');
@@ -36,13 +38,13 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::get('/test-email', function () {
-    Mail::raw('tomorrow is meeting dear sir', function ($message) {
-        $message->to('shariqq.com@gmail.com')
-                ->subject('meeting tomorrow');
-    });
+// Route::get('/test-email', function () {
+//     Mail::raw('tomorrow is meeting dear sir', function ($message) {
+//         $message->to('shariqq.com@gmail.com')
+//                 ->subject('meeting tomorrow');
+//     });
 
-    return 'Test email sent!';
-});
+//     return 'Test email sent!';
+// });
 
 require __DIR__.'/auth.php';
